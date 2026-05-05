@@ -1,4 +1,4 @@
-  <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="ko">
 <head>
 <meta charset="UTF-8">
@@ -66,27 +66,10 @@ body {
 }
 @keyframes moonGlow {
   from { box-shadow: 0 0 30px rgba(255,250,180,0.4), 0 0 80px rgba(255,250,180,0.15); }
-  to { box-shadow: 0 0 40px rgba(255,250,180,0.6), 0 0 100px rgba(255,250,180,0.25); }
+  to   { box-shadow: 0 0 40px rgba(255,250,180,0.6), 0 0 100px rgba(255,250,180,0.25); }
 }
 
-.fire-glow {
-  position: absolute;
-  bottom: 5%; left: 50%;
-  transform: translateX(-50%);
-  width: 200px; height: 200px;
-  background: radial-gradient(circle, rgba(255,174,66,0.6) 0%, rgba(255,69,0,0.4) 40%, transparent 70%);
-  filter: blur(30px);
-  animation: fire 2s ease-in-out infinite alternate;
-}
-@keyframes fire {
-  from { transform: translateX(-50%) scale(1); opacity: 0.6; }
-  to { transform: translateX(-50%) scale(1.15); opacity: 0.9; }
-}
-
-.content {
-  position: relative;
-  z-index: 1;
-}
+.content { position: relative; z-index: 1; }
 
 .hero {
   height: 100vh;
@@ -98,15 +81,24 @@ body {
   padding: 20px;
 }
 
-.hero-logo {
-  width: clamp(280px, 65vw, 500px);
-  mix-blend-mode: screen;
+.logo-wrap {
+  background: rgba(5, 13, 24, 0.75);
+  border-radius: 28px;
+  padding: 20px 28px;
+  border: 1px solid rgba(255,255,255,0.07);
+  backdrop-filter: blur(10px);
+  box-shadow: 0 0 60px rgba(100,140,255,0.1);
   animation: fadeUp 1s ease both;
-  filter: drop-shadow(0 0 30px rgba(180,160,255,0.3));
+}
+
+.hero-logo {
+  width: clamp(180px, 40vw, 300px);
+  display: block;
+  border-radius: 12px;
 }
 
 .hero-sub {
-  margin-top: 8px;
+  margin-top: 16px;
   font-size: clamp(13px, 3vw, 17px);
   opacity: 0.55;
   letter-spacing: 4px;
@@ -125,17 +117,33 @@ body {
 }
 @keyframes bounce {
   0%, 100% { transform: translateX(-50%) translateY(0); }
-  50% { transform: translateX(-50%) translateY(8px); }
+  50%       { transform: translateX(-50%) translateY(8px); }
 }
 
 @keyframes fadeUp {
   from { opacity: 0; transform: translateY(30px); }
-  to { opacity: 1; transform: translateY(0); }
+  to   { opacity: 1; transform: translateY(0); }
 }
 
-.section {
-  padding: 60px 20px;
+.section { padding: 60px 20px; text-align: center; }
+
+/* 디스코드 섹션 - 캠프파이어 배경 */
+.section-campfire {
+  padding: 80px 20px 100px;
   text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+
+/* 캠프파이어 배경 glow */
+.section-campfire::before {
+  content: '';
+  position: absolute;
+  bottom: 0; left: 50%;
+  transform: translateX(-50%);
+  width: 400px; height: 300px;
+  background: radial-gradient(ellipse at 50% 100%, rgba(255,120,30,0.35) 0%, rgba(255,60,0,0.15) 40%, transparent 70%);
+  pointer-events: none;
 }
 
 .card {
@@ -149,24 +157,12 @@ body {
   opacity: 0;
   transform: translateY(40px);
   transition: opacity 0.7s ease, transform 0.7s ease;
+  position: relative;
+  z-index: 2;
 }
-
-.card.show {
-  opacity: 1;
-  transform: translateY(0);
-}
-
-.card h2 {
-  font-size: 22px;
-  margin-bottom: 20px;
-  letter-spacing: 2px;
-}
-
-.card p {
-  line-height: 2.2;
-  opacity: 0.8;
-  font-size: 15px;
-}
+.card.show { opacity: 1; transform: translateY(0); }
+.card h2 { font-size: 22px; margin-bottom: 20px; letter-spacing: 2px; }
+.card p  { line-height: 2.2; opacity: 0.8; font-size: 15px; }
 
 .btn {
   display: inline-block;
@@ -189,16 +185,104 @@ body {
 }
 
 .divider {
-  width: 1px;
-  height: 60px;
+  width: 1px; height: 60px;
   background: linear-gradient(to bottom, transparent, rgba(255,255,255,0.2), transparent);
   margin: 0 auto;
+}
+
+/* 🔥 캠프파이어 */
+.campfire {
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  z-index: 1;
+}
+
+.fire {
+  position: relative;
+  width: 70px;
+  height: 90px;
+}
+
+.sparks {
+  position: absolute;
+  bottom: 10px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 60px;
+  height: 70px;
+  pointer-events: none;
+}
+.spark {
+  position: absolute;
+  width: 3px; height: 3px;
+  border-radius: 50%;
+  background: #ffcc00;
+  opacity: 0;
+  animation: sparkFly 1.5s ease-out infinite;
+}
+.spark:nth-child(1) { left: 30px; animation-delay: 0s;   --dx: -1; }
+.spark:nth-child(2) { left: 20px; animation-delay: 0.3s; --dx: 1.5;  background: #ff8800; }
+.spark:nth-child(3) { left: 40px; animation-delay: 0.6s; --dx: -0.5; background: #ffee00; }
+.spark:nth-child(4) { left: 25px; animation-delay: 0.9s; --dx: 2;    background: #ff6600; }
+.spark:nth-child(5) { left: 35px; animation-delay: 1.2s; --dx: -1.5; }
+
+@keyframes sparkFly {
+  0%   { transform: translate(0,0) scale(1); opacity: 1; }
+  100% { transform: translate(calc(var(--dx) * 22px), -65px) scale(0); opacity: 0; }
+}
+
+.flame {
+  position: absolute;
+  bottom: 0;
+  border-radius: 50% 50% 30% 30%;
+  transform-origin: bottom center;
+}
+.flame-1 { width: 30px; height: 60px; left:50%; transform:translateX(-50%); background:linear-gradient(to top,#ff6a00,#ffae00,#fff7a0); animation: flicker 0.4s ease-in-out infinite alternate; }
+.flame-2 { width: 22px; height: 44px; left:28%; background:linear-gradient(to top,#ff4500,#ff8c00,#ffdd57); animation: flicker 0.55s ease-in-out infinite alternate; animation-delay:0.1s; }
+.flame-3 { width: 20px; height: 38px; left:52%; background:linear-gradient(to top,#ff3300,#ff7700,#ffe066); animation: flicker 0.45s ease-in-out infinite alternate; animation-delay:0.2s; }
+.flame-4 { width: 14px; height: 24px; left:18%; background:linear-gradient(to top,#ff6a00,#ffcc00); animation: flicker 0.6s ease-in-out infinite alternate; animation-delay:0.05s; }
+.flame-5 { width: 12px; height: 20px; left:68%; background:linear-gradient(to top,#ff4500,#ffaa00); animation: flicker 0.5s ease-in-out infinite alternate; animation-delay:0.15s; }
+
+@keyframes flicker {
+  from { transform: translateX(-10%) scaleX(1) scaleY(1) rotate(-2deg); }
+  to   { transform: translateX(10%) scaleX(0.88) scaleY(1.06) rotate(2deg); }
+}
+
+.logs {
+  width: 100px; height: 20px;
+  position: relative;
+  margin-top: -6px;
+}
+.log {
+  position: absolute;
+  height: 11px;
+  border-radius: 6px;
+  background: linear-gradient(to right, #4a2008, #8B4513, #4a2008);
+}
+.log-1 { width: 90px; left: 5px; top: 4px; transform: rotate(-10deg); }
+.log-2 { width: 80px; left: 10px; top: 7px; transform: rotate(10deg); }
+
+.fire-ground {
+  width: 140px; height: 18px;
+  background: radial-gradient(ellipse, rgba(255,100,0,0.55), transparent 70%);
+  filter: blur(6px);
+  animation: glowPulse 1s ease-in-out infinite alternate;
+}
+@keyframes glowPulse {
+  from { opacity: 0.5; transform: scaleX(0.9); }
+  to   { opacity: 1;   transform: scaleX(1.1); }
 }
 
 @media (max-width: 768px) {
   .moon { width: 70px; height: 70px; top: 5%; right: 5%; }
   .card { padding: 28px 20px; }
-  .hero-logo { width: clamp(240px, 80vw, 400px); }
+  .hero-logo { width: clamp(160px, 50vw, 240px); }
+  .logo-wrap { padding: 16px 20px; }
 }
 </style>
 </head>
@@ -207,13 +291,14 @@ body {
 <div class="bg-wrapper">
   <div class="stars"></div>
   <div class="moon"></div>
-  <div class="fire-glow"></div>
 </div>
 
 <div class="content">
 
   <section class="hero">
-    <img src="bg-logo.png" class="hero-logo" alt="달무리">
+    <div class="logo-wrap">
+      <img src="logo.png" class="hero-logo" alt="달무리">
+    </div>
     <p class="hero-sub">달빛 아래, 함께하는 우리</p>
     <div class="scroll-hint">▼ scroll</div>
   </section>
@@ -247,12 +332,39 @@ body {
 
   <div class="divider"></div>
 
-  <section class="section">
+  <!-- 🔥 캠프파이어 배경 + 디스코드 카드 -->
+  <section class="section-campfire">
+
+    <!-- 배경 캠프파이어 -->
+    <div class="campfire">
+      <div class="fire">
+        <div class="sparks">
+          <div class="spark"></div>
+          <div class="spark"></div>
+          <div class="spark"></div>
+          <div class="spark"></div>
+          <div class="spark"></div>
+        </div>
+        <div class="flame flame-1"></div>
+        <div class="flame flame-2"></div>
+        <div class="flame flame-3"></div>
+        <div class="flame flame-4"></div>
+        <div class="flame flame-5"></div>
+      </div>
+      <div class="logs">
+        <div class="log log-1"></div>
+        <div class="log log-2"></div>
+      </div>
+      <div class="fire-ground"></div>
+    </div>
+
+    <!-- 카드 -->
     <div class="card">
       <h2>🎮 가입 방법</h2>
       <p>디스코드로 문의해주세요</p>
       <a href="https://discord.gg/NCcQZv937k" class="btn">디스코드 참여</a>
     </div>
+
   </section>
 
 </div>
