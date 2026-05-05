@@ -112,6 +112,11 @@ body {
 }
 
 .hero-title {
+  .hero-logo {
+  width: clamp(280px, 60vw, 480px);
+  mix-blend-mode: screen;
+  animation: fadeUp 1s ease both;
+}
   font-size: clamp(48px, 12vw, 80px);
   letter-spacing: 16px;
   font-weight: 700;
@@ -230,10 +235,10 @@ body {
 <div class="content">
 
   <section class="hero">
-    <h1 class="hero-title">달무리</h1>
-    <p class="hero-sub">달빛 아래, 함께하는 우리</p>
-    <div class="scroll-hint">▼ scroll</div>
-  </section>
+  <img src="bg-logo.png" class="hero-logo" alt="달무리">
+  <p class="hero-sub">달빛 아래, 함께하는 우리</p>
+  <div class="scroll-hint">▼ scroll</div>
+</section>
 
   <div class="divider"></div>
 
